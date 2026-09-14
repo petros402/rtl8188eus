@@ -16,6 +16,11 @@ EXTRA_CFLAGS += -Wno-enum-conversion
 EXTRA_CFLAGS += -Wno-vla
 EXTRA_CFLAGS += -Wno-date-time
 
+# The driver requires an explicit endianness definition to compile.
+# Since all built-in platform targets are disabled, Little-Endian
+# must be specified manually for ARM64 / Android.
+EXTRA_CFLAGS += -DCONFIG_LITTLE_ENDIAN
+
 
 GCC_VER_49 := $(shell echo `$(CC) -dumpversion | cut -f1-2 -d.` \>= 4.9 | bc )
 ifeq ($(GCC_VER_49),1)
@@ -98,7 +103,7 @@ CONFIG_RTW_SDIO_PM_KEEP_POWER = y
 ###################### MP HW TX MODE FOR VHT #######################
 CONFIG_MP_VHT_HW_TX_MODE = n
 ###################### Platform Related #######################
-CONFIG_PLATFORM_I386_PC = y
+CONFIG_PLATFORM_I386_PC = n
 CONFIG_PLATFORM_ARM_RPI = n
 CONFIG_PLATFORM_ARM64_RPI = n
 CONFIG_PLATFORM_ANDROID_X86 = n
