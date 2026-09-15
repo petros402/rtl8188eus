@@ -1,6 +1,14 @@
 config RTL8188EU
-	tristate "Realtek 8188E USB WiFi"
-	depends on USB
+	tristate "Realtek 8188EU USB WiFi"
+	depends on USB && CFG80211
+	select WIRELESS_EXT
+	select WEXT_PRIV
+	select WEXT_SPY
+	default m
 	---help---
-	  Help message of RTL8188EU
+	  This option enables support for the Realtek RTL8188EUS USB
+	  802.11b/g/n wireless network adapter with monitor mode and
+	  frame injection support.
 
+	  To compile this driver as a module, choose M here: the
+	  module will be called 8188eu.
