@@ -5112,6 +5112,7 @@ int proc_get_efuse_map(struct seq_file *m, void *v)
 	ips_mode = pwrctrlpriv->ips_mode;
 	rtw_pm_set_ips(padapter, IPS_NONE);
 
+#ifdef CONFIG_EFUSE_CONFIG_FILE
 	if (pHalData->efuse_file_status == EFUSE_FILE_LOADED) {
 		RTW_PRINT_SEL(m, "File eFuse Map loaded! file path:%s\nDriver eFuse Map From File\n", EFUSE_MAP_PATH);
 		if (pHalData->bautoload_fail_flag)
@@ -5125,6 +5126,11 @@ int proc_get_efuse_map(struct seq_file *m, void *v)
 		if (pHalData->bautoload_fail_flag)
 			RTW_PRINT_SEL(m, "HW Autoload fail!!!\n");
 	}
+#else
+	RTW_PRINT_SEL(m, "Driver eFuse Map From HW\n");
+	if (pHalData->bautoload_fail_flag)
+		RTW_PRINT_SEL(m, "HW Autoload fail!!!\n");
+#endif
 	for (i = 0; i < mapLen; i += 16) {
 		RTW_PRINT_SEL(m, "0x%02x\t", i);
 		for (j = 0; j < 8; j++)
